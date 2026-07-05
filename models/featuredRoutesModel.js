@@ -13,6 +13,15 @@ const featuredRoutesSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please Enter the price"],
   },
+  image: {
+    type: String,
+    required: [true, "Please select an image"],
+  },
 });
 
-const featuredRoutesModel = mongoose.model("featuredRoutes");
+const featuredRoutesModel = mongoose.model(
+  "featuredRoutes",
+  featuredRoutesSchema,
+);
+
+export default featuredRoutesModel;
