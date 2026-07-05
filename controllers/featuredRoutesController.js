@@ -1,3 +1,4 @@
+import { addFeatureRouteService } from "../services/featuredRoutesServices.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export async function addFeaturedRoute(req, res) {
@@ -8,6 +9,7 @@ export async function addFeaturedRoute(req, res) {
         .status(400)
         .json({ success: false, message: "Image is required" });
     }
+
     const cloudinaryRes = await uploadOnCloudinary(req.file.path); //upload the image to cloudinary
 
     if (!cloudinaryRes) {
@@ -22,13 +24,15 @@ export async function addFeaturedRoute(req, res) {
       image: cloudinaryRes.secure_url,
       publicId: cloudinaryRes.public_id,
     };
+    const response = await addFeatureRouteService(data);
+
     res.status(201).json({
       success: true,
       message: "Featured Route Added Successfully",
-      data,
+      response,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(505).json({
       success: false,
       message: error.message,
     });
