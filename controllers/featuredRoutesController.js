@@ -1,5 +1,23 @@
-import { addFeatureRouteService } from "../services/featuredRoutesServices.js";
+import {
+  addFeatureRouteService,
+  getAllfeaturedRoutesService,
+} from "../services/featuredRoutesServices.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+export async function getAllfeaturedRoutes(req, res) {
+  try {
+    const response = await getAllfeaturedRoutesService();
+    res.status(200).json({
+      status: "success",
+      response,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "failed",
+      message: error.message,
+    });
+  }
+}
 
 export async function addFeaturedRoute(req, res) {
   try {
