@@ -6,10 +6,10 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export async function getAllfeaturedRoutes(req, res) {
   try {
-    const response = await getAllfeaturedRoutesService();
+    const data = await getAllfeaturedRoutesService();
     res.status(200).json({
       status: "success",
-      response,
+      data,
     });
   } catch (error) {
     res.status(500).json({
