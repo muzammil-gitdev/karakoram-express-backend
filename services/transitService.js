@@ -7,3 +7,7 @@ export async function createTransitService(data) {
 export async function getAllTransitService() {
   return await transitModel.find();
 }
+
+export async function updateTransitService(key, data) {
+  return await transitModel.replaceOne({ _id: key }, data);
+}
