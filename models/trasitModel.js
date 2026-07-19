@@ -11,10 +11,6 @@ const transitSchema = mongoose.Schema({
     required: true,
     enum: ["Skardu", "Gilgit", "Rawalpindi"],
   },
-  dateOfTransit: {
-    type: Date,
-    required: true,
-  },
   totalSeats: {
     type: Number,
     required: true,
@@ -38,7 +34,7 @@ const transitSchema = mongoose.Schema({
   },
   bookedSeats: {
     type: [Number],
-    required: true,
+    default: 0,
   },
 });
 
