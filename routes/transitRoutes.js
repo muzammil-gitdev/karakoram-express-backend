@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createTransit,
+  deleteTransit,
   getAllTransit,
   getTransit,
   updateTransit,
@@ -8,6 +9,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").post(createTransit).get(getAllTransit).put(updateTransit);
+router.route("/:id").put(updateTransit).delete(deleteTransit);
+router.route("/").post(createTransit).get(getAllTransit);
 
 export { router as transitRouter };

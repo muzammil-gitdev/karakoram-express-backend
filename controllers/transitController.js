@@ -1,5 +1,6 @@
 import {
   createTransitService,
+  deleteTransitService,
   getAllTransitService,
   updateTransitService,
 } from "../services/transitService.js";
@@ -39,21 +40,27 @@ export async function getAllTransit(req, res) {
 export async function updateTransit(req, res) {
   try {
     const data = req.body;
-    const id = data.id;
-    const payload = {
-      from: data.from,
-      to: data.to,
-      ticketPrice: data.ticketPrice,
-      departure: data.departure,
-      arrival: data.arrival,
-      totalSeats: data.totalSeats,
-      vehicleNumber: data.vehicleNumber,
-      bookedSeats: data.bookedSeats,
-    };
-    const response = await updateTransitService(id, payload);
+    const id = req.params.id;
+    const response = await updateTransitService(id, data);
     res.status(200).json({
       success: true,
       data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+}
+
+export async function deleteTransit(req, res) {
+  try {
+    const id = req.params.id;
+    const response = await deleteTransitService(id);
+    res.status(200).json({
+      success: true,
+      response,
     });
   } catch (err) {
     res.status(500).json({

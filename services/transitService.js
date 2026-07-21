@@ -11,3 +11,7 @@ export async function getAllTransitService() {
 export async function updateTransitService(key, data) {
   return await transitModel.replaceOne({ _id: key }, data);
 }
+
+export async function deleteTransitService(id) {
+  return await transitModel.deleteOne({ _id: id });
+}
