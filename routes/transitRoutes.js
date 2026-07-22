@@ -10,6 +10,7 @@ import {
 const router = express.Router();
 
 router.route("/:id").put(updateTransit).delete(deleteTransit);
-router.route("/").post(createTransit).get(getAllTransit);
+router.route("/").post(createTransit).get(getTransit);
+router.route("/all").get(getAllTransit);
 
 export { router as transitRouter };

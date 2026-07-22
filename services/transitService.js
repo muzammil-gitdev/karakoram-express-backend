@@ -8,6 +8,17 @@ export async function getAllTransitService() {
   return await transitModel.find();
 }
 
+export async function getTransitService(origin, destination, start, end) {
+  return await transitModel.find({
+    from: origin,
+    to: destination,
+    departure: {
+      $gte: start,
+      $lte: end,
+    },
+  });
+}
+
 export async function updateTransitService(key, data) {
   return await transitModel.replaceOne({ _id: key }, data);
 }

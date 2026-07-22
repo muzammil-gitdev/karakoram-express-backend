@@ -2,6 +2,7 @@ import {
   createTransitService,
   deleteTransitService,
   getAllTransitService,
+  getTransitService,
   updateTransitService,
 } from "../services/transitService.js";
 
@@ -19,10 +20,6 @@ export async function createTransit(req, res) {
       error: error.message,
     });
   }
-}
-export async function getTransit(req, res) {
-  try {
-  } catch (error) {}
 }
 
 export async function getAllTransit(req, res) {
@@ -64,6 +61,23 @@ export async function deleteTransit(req, res) {
     });
   } catch (err) {
     res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+}
+
+export async function getTransit(req, res) {
+  const obj = Object.assign({}, req.query);
+  const { from, to, start, end } = obj;
+  const data = await getTransitService(from, to, start, end);
+  try {
+    res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (err) {
+    res.status(201).json({
       success: false,
       error: err.message,
     });
