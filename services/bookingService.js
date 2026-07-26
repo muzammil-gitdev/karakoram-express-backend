@@ -12,11 +12,6 @@ export async function findAndUpdateService(
   attach_seatsBooked,
   session,
 ) {
-  // console.log(find_from);
-  // console.log(find_to);
-  // console.log(find_transitDat);
-  // console.log(find_vehicleNo);
-  // console.log(attach_seatsBooked);
   return await transitModel.findOneAndUpdate(
     {
       to: find_to,
