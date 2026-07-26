@@ -18,7 +18,7 @@ export async function createBooking(req, res) {
       seatsBooked,
       session,
     );
-    console.log(updateTransitResponse);
+    // console.log(updateTransitResponse);
     if (!updateTransitResponse) {
       throw new Error("Seat Already Booked");
     }
