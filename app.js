@@ -3,6 +3,7 @@ import cors from "cors";
 import { featuredRoutesRoute } from "./routes/featuredRoutesRoute.js";
 import { transitRouter } from "./routes/transitRoutes.js";
 import { bookingRouter } from "./routes/bookingRoutes.js";
+import { authRouter } from "./routes/authRoutes.js";
 
 export const app = express();
 
@@ -11,3 +12,4 @@ app.use(cors());
 app.use("/api/featuredRoutes", featuredRoutesRoute);
 app.use("/api/transit", transitRouter);
 app.use("/api/booking", bookingRouter);
+app.use("/api/auth", authRouter);
