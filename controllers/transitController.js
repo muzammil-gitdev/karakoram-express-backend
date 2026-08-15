@@ -68,7 +68,9 @@ export async function deleteTransit(req, res) {
 }
 
 export async function getTransit(req, res) {
+  console.log(req.query);
   const obj = Object.assign({}, req.query);
+  console.log(obj);
   const { from, to, start, end } = obj;
   const data = await getTransitService(from, to, start, end);
   try {
