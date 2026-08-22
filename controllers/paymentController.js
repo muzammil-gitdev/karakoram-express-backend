@@ -8,14 +8,14 @@ export async function transitPayment(req, res) {
   try {
     const data = req.body;
     const response = await createBookingService(data);
-    console.log(response);
+    const id = response[0].id;
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      client_reference_id: id,
       line_items: [
         {
           price_data: {
             currency: "usd",
-            client_reference_id: data._id,
             product_data: {
               name: `${data.from} --> ${data.to} via ${data.vehicleNo}`,
             },
@@ -51,21 +51,28 @@ export async function stripeWebhook(req, res) {
       sig,
       process.env.STRIPE_WEBHOOK_KEY,
     );
-    console.log(event);
   } catch (err) {
     console.error("Webhook signature verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
+  console.log(event.type);
   const session = event.data.object;
-  switch (event.type) {
-    case "checkout.session.completed":
-      await bookingModel.findByIdAndUpdate(session.client_reference_id, {
-        status: "paid",
-      });
-      break;
-    case "checkout.session.expired":
-      await bookingModel.findByIdAndDelete(session.client_reference_id);
-      break;
-  }
-  res.json({ received: true });
+  console.log(session.client_reference_id);
+  // switch (event.type) {
+  //   case "checkout.session.completed":
+  //     await bookingModel.findByIdAndUpdate(session.client_reference_id, {
+  //       status: "paid",
+  //     });
+  //     break;
+  //   case "checkout.session.expired":
+  //     await bookingModel.findByIdAndDelete(session.client_reference_id);
+  //     break;
+  //   default:
+  //     await bookingModel.findByIdAndDelete(session.client_reference_id);
+  //     break;
+  // }
+  if (event.type === "checkout.session.completed")
+    //     await bookingModel.findByIdAndUpdate(session.client_reference_id, {
+
+    res.json({ received: true });
 }
