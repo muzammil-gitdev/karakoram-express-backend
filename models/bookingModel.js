@@ -53,6 +53,10 @@ const bookingSchema = mongoose.Schema({
     required: true,
     enum: ["Rawalpindi", "Skardu", "Gilgit", "Gahkuch"],
   },
+  status: {
+    type: String,
+    default: "pending",
+  },
 });
 
 const bookingModel = mongoose.model("booking", bookingSchema);

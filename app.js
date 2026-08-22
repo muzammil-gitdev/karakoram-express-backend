@@ -6,8 +6,10 @@ import { bookingRouter } from "./routes/bookingRoutes.js";
 import { authRouter } from "./routes/authRoutes.js";
 import { passengerRouter } from "./routes/passengersRoute.js";
 import { paymentRouter } from "./routes/paymentRoute.js";
+import { stripeWebhook } from "./controllers/paymentController.js";
 export const app = express();
 
+app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook);
 app.use(express.json());
 app.use(cors());
 app.use("/api/featuredRoutes", featuredRoutesRoute);

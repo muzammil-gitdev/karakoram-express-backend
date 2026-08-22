@@ -9,7 +9,6 @@ import {
 export async function createTransit(req, res) {
   try {
     const data = req.body;
-    console.log(data);
     const response = await createTransitService(data);
     res.status(200).json({
       success: true,
@@ -68,9 +67,7 @@ export async function deleteTransit(req, res) {
 }
 
 export async function getTransit(req, res) {
-  console.log(req.query);
   const obj = Object.assign({}, req.query);
-  console.log(obj);
   const { from, to, start, end } = obj;
   const data = await getTransitService(from, to, start, end);
   try {
