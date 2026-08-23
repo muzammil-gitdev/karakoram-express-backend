@@ -25,7 +25,7 @@ export async function transitPayment(req, res) {
         },
       ],
       success_url: `${process.env.FRONTEND_URL}`,
-      cancel_url: `${process.env.FRONTEND_URL}/booking?name=muzammil`,
+      cancel_url: `${process.env.FRONTEND_URL}/booking`,
     });
     res.status(200).json({
       success: true,
@@ -42,7 +42,6 @@ export async function transitPayment(req, res) {
 }
 
 export async function stripeWebhook(req, res) {
-  console.log("Hook run!!");
   const sig = req.headers["stripe-signature"];
   let event;
   try {
@@ -58,21 +57,16 @@ export async function stripeWebhook(req, res) {
   console.log(event.type);
   const session = event.data.object;
   console.log(session.client_reference_id);
-  // switch (event.type) {
-  //   case "checkout.session.completed":
-  //     await bookingModel.findByIdAndUpdate(session.client_reference_id, {
-  //       status: "paid",
-  //     });
-  //     break;
-  //   case "checkout.session.expired":
-  //     await bookingModel.findByIdAndDelete(session.client_reference_id);
-  //     break;
-  //   default:
-  //     await bookingModel.findByIdAndDelete(session.client_reference_id);
-  //     break;
-  // }
-  if (event.type === "checkout.session.completed")
-    //     await bookingModel.findByIdAndUpdate(session.client_reference_id, {
+  switch (event.type) {
+    case "checkout.session.completed":
+      await bookingModel.findByIdAndUpdate(session.client_reference_id, {
+        status: "paid",
+      });
+      break;
+    case "checkout.session.expired":
+      await bookingModel.findByIdAndDelete(session.client_reference_id);
+      break;
+  }
 
-    res.json({ received: true });
+  res.json({ received: true });
 }
